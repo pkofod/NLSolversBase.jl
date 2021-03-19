@@ -21,3 +21,10 @@ end
 NonDifferentiable(f, g,        x::AbstractArray, F::Union{AbstractArray, Real} = real(zero(eltype(x)))) = NonDifferentiable(f, x, F)
 NonDifferentiable(f, g, h,     x::TX, F) where TX  = NonDifferentiable(f, x, F)
 NonDifferentiable(f, g, fg, h, x::TX, F) where TX  = NonDifferentiable(f, x, F)
+
+# NonDifferentiable complex functions are reduced to real and imaginary parts
+function NonDifferentiable(f, x::AbstractArray{Complex{T}}, F::Real = zero(T); inplace = true) where T
+    f1(zs) = f(complex.(eachslice(zs, dims=1)...))
+    x1 = similar(x, T, 2, size(x)...)
+    NonDifferentiable{typeof(F), typeof(x1)}(f1, F, x1, [0,])
+end
