@@ -113,12 +113,12 @@ function TwiceDifferentiable(f, x::AbstractArray, F::Real = real(zero(eltype(x))
             FiniteDiff.finite_difference_gradient!(storage, f, x, gcache)
             return
         end
-        function fg!(storage::Vector, x::Vector)
+        function fg!(storage, x)
             g!(storage, x)
             return f(x)
         end
 
-        function h!(storage::Matrix, x::Vector)
+        function h!(storage, x)
             FiniteDiff.finite_difference_hessian!(storage, f, x)
             return
         end

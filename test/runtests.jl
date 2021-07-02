@@ -1,6 +1,7 @@
 using NLSolversBase, Test
 using Random
 using LinearAlgebra: Diagonal, I
+using ComponentArrays
 using SparseArrays
 using OptimTestProblems
 using RecursiveArrayTools
